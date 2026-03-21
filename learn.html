@@ -8,7 +8,6 @@
 
 <body class="bg-white text-gray-800">
 
-<!-- NAVBAR -->
 <nav class="flex justify-between items-center px-8 py-4 bg-blue-900 text-white">
   <h1 class="text-2xl font-bold">BudgetPro</h1>
 
@@ -28,7 +27,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <section class="relative h-[50vh] flex items-center justify-center text-center">
 
   <div class="absolute inset-0">
@@ -44,17 +42,14 @@
 
 </section>
 
-<!-- SEARCH + FILTER -->
 <section class="py-10 px-8 md:px-20">
 
   <div class="flex flex-col md:flex-row gap-4 mb-8">
 
-    <!-- SEARCH -->
     <input type="text" id="searchInput"
       placeholder="Search articles..."
       class="border px-4 py-2 rounded w-full md:w-1/2">
 
-    <!-- FILTER -->
     <select id="filterSelect" class="border px-4 py-2 rounded w-full md:w-1/4">
       <option value="all">All Topics</option>
       <option value="saving">Saving</option>
@@ -64,40 +59,33 @@
 
   </div>
 
-  <!-- ARTICLES -->
   <div id="articlesContainer" class="grid md:grid-cols-3 gap-8">
 
-    <!-- ARTICLE 1 -->
     <div class="article-card p-6 shadow-lg rounded-lg" data-type="saving">
       <h2 class="text-xl font-bold text-blue-900 mb-2">How to Save Money Fast</h2>
       <p>Learn simple strategies to grow your savings quickly.</p>
     </div>
 
-    <!-- ARTICLE 2 -->
     <div class="article-card p-6 shadow-lg rounded-lg" data-type="budgeting">
       <h2 class="text-xl font-bold text-blue-900 mb-2">Creating a Monthly Budget</h2>
       <p>Step-by-step guide to planning your monthly expenses.</p>
     </div>
 
-    <!-- ARTICLE 3 -->
     <div class="article-card p-6 shadow-lg rounded-lg" data-type="investing">
       <h2 class="text-xl font-bold text-blue-900 mb-2">Beginner’s Guide to Investing</h2>
       <p>Start investing with confidence and grow your wealth.</p>
     </div>
 
-    <!-- ARTICLE 4 -->
     <div class="article-card p-6 shadow-lg rounded-lg" data-type="saving">
       <h2 class="text-xl font-bold text-blue-900 mb-2">Emergency Fund Tips</h2>
       <p>Why you need an emergency fund and how to build one.</p>
     </div>
 
-    <!-- ARTICLE 5 -->
     <div class="article-card p-6 shadow-lg rounded-lg" data-type="budgeting">
       <h2 class="text-xl font-bold text-blue-900 mb-2">Tracking Your Expenses</h2>
       <p>Understand where your money goes every day.</p>
     </div>
 
-    <!-- ARTICLE 6 -->
     <div class="article-card p-6 shadow-lg rounded-lg" data-type="investing">
       <h2 class="text-xl font-bold text-blue-900 mb-2">Smart Investment Tips</h2>
       <p>Maximize your returns with these smart strategies.</p>
@@ -107,19 +95,16 @@
 
 </section>
 
-<!-- FOOTER -->
 <footer class="bg-blue-950 text-white text-center py-6">
   <p>© 2026 BudgetPro</p>
 </footer>
 
-<!-- JAVASCRIPT -->
 <script>
 
 const searchInput = document.getElementById("searchInput");
 const filterSelect = document.getElementById("filterSelect");
 const articles = document.querySelectorAll(".article-card");
 
-// SEARCH
 searchInput.addEventListener("input", function() {
   const value = searchInput.value.toLowerCase();
 
@@ -129,7 +114,6 @@ searchInput.addEventListener("input", function() {
   });
 });
 
-// FILTER
 filterSelect.addEventListener("change", function() {
   const value = filterSelect.value;
 
