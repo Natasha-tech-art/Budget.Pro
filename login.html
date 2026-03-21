@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - BudgetPro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white text-gray-800">
+
+<!-- NAVBAR -->
+<nav class="flex justify-between items-center px-8 py-4 bg-blue-900 text-white">
+  <h1 class="text-2xl font-bold">BudgetPro</h1>
+
+  <ul class="flex gap-6 items-center">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="pricing.html">Plans</a></li>
+    <li><a href="learn.html">Learn</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="login.html" class="text-blue-300">Login</a></li>
+    <li>
+      <a href="dashboard.html" class="bg-white text-blue-900 px-4 py-2 rounded-lg font-semibold">
+        Start Budgeting
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- LOGIN SECTION -->
+<section class="min-h-screen flex items-center justify-center bg-blue-50">
+
+  <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+
+    <h2 class="text-2xl font-bold text-blue-900 mb-6 text-center">
+      Login to Your Account
+    </h2>
+
+    <form id="loginForm" class="flex flex-col gap-4">
+
+      <!-- EMAIL -->
+      <input type="email" id="email"
+        placeholder="Email"
+        class="border px-4 py-2 rounded">
+
+      <!-- PASSWORD -->
+      <div class="relative">
+        <input type="password" id="password"
+          placeholder="Password"
+          class="border px-4 py-2 rounded w-full">
+
+        <!-- SHOW PASSWORD BUTTON -->
+        <button type="button" id="togglePassword"
+          class="absolute right-3 top-2 text-sm text-blue-700">
+          Show
+        </button>
+      </div>
+
+      <!-- LOGIN BUTTON -->
+      <button type="submit"
+        class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700">
+        Login
+      </button>
+
+    </form>
+
+    <!-- MESSAGE -->
+    <p id="message" class="text-center mt-4"></p>
+
+  </div>
+
+</section>
+
+<!-- JAVASCRIPT -->
+<script>
+
+// ELEMENTS
+const form = document.getElementById("loginForm");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const message = document.getElementById("message");
+const togglePassword = document.getElementById("togglePassword");
+
+// SHOW / HIDE PASSWORD
+togglePassword.addEventListener("click", function() {
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    togglePassword.innerText = "Hide";
+  } else {
+    passwordInput.type = "password";
+    togglePassword.innerText = "Show";
+  }
+});
+
+// LOGIN VALIDATION
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const email = emailInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  if (email === "" || password === "") {
+    message.textContent = "Please fill in all fields!";
+    message.className = "text-red-500 text-center mt-4";
+    return;
+  }
+
+  if (!email.includes("@")) {
+    message.textContent = "Enter a valid email!";
+    message.className = "text-red-500 text-center mt-4";
+    return;
+  }
+
+  // SUCCESS
+  message.textContent = "Login successful!";
+  message.className = "text-green-600 text-center mt-4";
+
+  // REDIRECT
+  setTimeout(() => {
+    window.location.href = "dashboard.html";
+  }, 1000);
+
+});
+
+</script>
+
+</body>
+</html>

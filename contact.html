@@ -8,17 +8,16 @@
 
 <body class="bg-white text-gray-800">
 
-<!-- NAVBAR -->
 <nav class="flex justify-between items-center px-8 py-4 bg-blue-900 text-white">
   <h1 class="text-2xl font-bold">BudgetPro</h1>
 
   <ul class="flex gap-6 items-center">
     <li><a href="index.html">Home</a></li>
-    <li><a href="about.html">About</a></li>
+    <li><a href="about.html">About Us</a></li>
     <li><a href="how-it-works.html">How It Works</a></li>
-    <li><a href="pricing.html">Plans</a></li>
+    <li><a href="pricing.html">Plans & Prices</a></li>
     <li><a href="learn.html">Learn</a></li>
-    <li><a href="contact.html" class="text-blue-300">Contact</a></li>
+    <li><a href="contact.html" class="text-blue-300">Contact Us</a></li>
     <li><a href="login.html">Login</a></li>
     <li>
       <a href="dashboard.html" class="bg-white text-blue-900 px-4 py-2 rounded-lg font-semibold">
@@ -28,7 +27,6 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <section class="relative h-[50vh] flex items-center justify-center text-center">
 
   <div class="absolute inset-0">
@@ -39,12 +37,11 @@
 
   <div class="relative z-10 text-white px-6">
     <h1 class="text-4xl font-bold mb-4">Contact Us</h1>
-    <p>We’d love to hear from you 💬</p>
+    <p>We’d love to hear from you</p>
   </div>
 
 </section>
 
-<!-- CONTACT FORM -->
 <section class="py-16 px-8 md:px-20">
 
   <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-8">
@@ -71,7 +68,6 @@
 
     </form>
 
-    <!-- SUCCESS MESSAGE -->
     <p id="successMessage" class="text-green-600 mt-4 hidden text-center">
       Message sent successfully!
     </p>
@@ -80,12 +76,10 @@
 
 </section>
 
-<!-- FOOTER -->
 <footer class="bg-blue-950 text-white text-center py-6">
   <p>© 2026 BudgetPro</p>
 </footer>
 
-<!-- JAVASCRIPT -->
 <script>
 
 const form = document.getElementById("contactForm");
@@ -101,7 +95,6 @@ form.addEventListener("submit", function(e) {
   const email = emailInput.value.trim();
   const message = messageInput.value.trim();
 
-  // VALIDATION
   if (name === "" || email === "" || message === "") {
     alert("Please fill in all fields!");
     return;
@@ -112,10 +105,8 @@ form.addEventListener("submit", function(e) {
     return;
   }
 
-  // SHOW SUCCESS
   successMessage.classList.remove("hidden");
 
-  // CLEAR FORM
   nameInput.value = "";
   emailInput.value = "";
   messageInput.value = "";
