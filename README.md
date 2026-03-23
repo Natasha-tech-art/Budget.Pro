@@ -34,7 +34,9 @@
       - Filtering content by category 
       - Interactive UI(buttons,alerts,highlights)
 
-      ## Learning Objectives
+       - - 
+
+      ###  Learning Objectives
        I built this project to practise :
        - JavaScript DOM Manipulation
        - Event Handling and form validation
