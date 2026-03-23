@@ -19,42 +19,71 @@
     <li><a href="learn.html">Learn</a></li>
     <li><a href="contact.html">Contact Us</a></li>
     <li><a href="login.html">Login</a></li>
+    <li>
+      <a href="dashboard.html" class="bg-white text-blue-900 px-4 py-2 rounded-lg font-semibold">
+        Start Budgeting
+      </a>
+    </li>
   </ul>
 </nav>
 
 <section class="bg-blue-900 text-white text-center py-16">
   <h1 class="text-4xl font-bold mb-4">Plans & Pricing</h1>
-  <p>Choose what works for you</p>
+  <p>Choose the plan that fits your needs</p>
 </section>
 
-<section class="py-12 px-8 md:px-20">
-  <div class="grid md:grid-cols-3 gap-8">
+<section class="py-10 px-8 md:px-20">
 
-    <div class="plan-card p-6 shadow-lg rounded-lg text-center">
+  <div class="flex flex-col md:flex-row gap-4 mb-8">
+
+    <input type="text" id="searchInput"
+      placeholder="Search plans..."
+      class="border px-4 py-2 rounded w-full md:w-1/2">
+
+    <select id="filterSelect"
+      class="border px-4 py-2 rounded w-full md:w-1/4">
+      <option value="all">All Plans</option>
+      <option value="free">Free</option>
+      <option value="premium">Premium</option>
+    </select>
+
+  </div>
+
+  <div id="plansContainer" class="grid md:grid-cols-3 gap-8">
+
+    <div class="plan-card p-6 shadow-lg rounded-lg text-center" data-type="free">
       <h2 class="text-2xl font-bold text-blue-900 mb-2">Free Plan</h2>
       <p class="text-3xl mb-4">KES 0</p>
-      <button class="choose-btn bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700">
+      <p class="mb-4">Basic features for beginners</p>
+      <button class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700">
         Choose
       </button>
     </div>
 
-    <div class="plan-card p-6 shadow-lg rounded-lg text-center">
+    <div class="plan-card p-6 shadow-lg rounded-lg text-center" data-type="premium">
       <h2 class="text-2xl font-bold text-blue-900 mb-2">Standard Plan</h2>
       <p class="text-3xl mb-4">KES 500/month</p>
-      <button class="choose-btn bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700">
+      <p class="mb-4">Advanced features and tracking</p>
+      <button class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700">
         Choose
       </button>
     </div>
 
-    <div class="plan-card p-6 shadow-lg rounded-lg text-center">
+    <div class="plan-card p-6 shadow-lg rounded-lg text-center" data-type="premium">
       <h2 class="text-2xl font-bold text-blue-900 mb-2">Premium Plan</h2>
       <p class="text-3xl mb-4">KES 1000/month</p>
-      <button class="choose-btn bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700">
+      <p class="mb-4">All features with priority support</p>
+      <button class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700">
         Choose
       </button>
     </div>
 
   </div>
+
+  <p id="noResults" class="text-center text-red-500 mt-6 hidden">
+    No plans found
+  </p>
+
 </section>
 
 <footer class="bg-blue-950 text-white text-center py-6">
@@ -65,60 +94,48 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-  const buttons = document.querySelectorAll(".choose-btn");
+  const searchInput = document.getElementById("searchInput");
+  const filterSelect = document.getElementById("filterSelect");
+  const plans = document.querySelectorAll(".plan-card");
+  const noResults = document.getElementById("noResults");
 
-  buttons.forEach(button => {
-    button.addEventListener("click", function () {
+  function updateDisplay() {
+    const searchValue = searchInput.value.toLowerCase();
+    const filterValue = filterSelect.value;
+    let visible = 0;
 
-      const card = this.closest(".plan-card");
-      const planName = card.querySelector("h2").innerText;
+    plans.forEach(plan => {
+      const text = plan.innerText.toLowerCase();
+      const type = plan.dataset.type;
 
-      document.querySelectorAll(".plan-card").forEach(c => {
-        c.classList.remove("border-4", "border-blue-900");
-      });
+      const matchesSearch = text.includes(searchValue);
+      const matchesFilter = filterValue === "all" || type === filterValue;
 
-      card.classList.add("border-4", "border-blue-900");
-
-      alert("You selected: " + planName);
-
-      setTimeout(() => {
-        window.location.href = "dashboard.html";
-      }, 1000);
-
+      if (matchesSearch && matchesFilter) {
+        plan.style.display = "block";
+        visible++;
+      } else {
+        plan.style.display = "none";
+      }
     });
-  });
 
-});
+    noResults.style.display = visible === 0 ? "block" : "none";
+  }
 
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+  searchInput.addEventListener("input", updateDisplay);
+  filterSelect.addEventListener("change", updateDisplay);
 
   const buttons = document.querySelectorAll(".plan-card button");
 
   buttons.forEach(button => {
     button.addEventListener("click", function () {
-
-      const card = this.closest(".plan-card");
-      const planName = card.querySelector("h2").innerText;
-
-      document.querySelectorAll(".plan-card").forEach(c => {
-        c.classList.remove("border-4", "border-blue-900");
-      });
-
-      card.classList.add("border-4", "border-blue-900");
-
+      const planName = this.parentElement.querySelector("h2").innerText;
       alert("You selected: " + planName);
-      
-      setTimeout(() => {
-        window.location.href = "dashboard.html";
-      }, 1000);
-
     });
   });
 
 });
+
 </script>
 
 </body>
