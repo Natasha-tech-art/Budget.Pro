@@ -34,5 +34,11 @@
       - Filtering content by category 
       - Interactive UI(buttons,alerts,highlights)
 
-      ### Author
-      * Natasha Bolyn         
+      ## Learning Objectives
+       I built this project to practise :
+       - JavaScript DOM Manipulation
+       - Event Handling and form validation
+       - Creating interactive UI features(search,filter & dashboard)
+
+      ## Author
+      Natasha Bolyn         
