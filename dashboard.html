@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Start Budgeting - BudgetPro</title>
+  <title>Dashboard - BudgetPro</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body class="bg-white text-gray-800">
+<body class="bg-gray-100 text-gray-800">
 
-<nav class="flex justify-between items-center px-8 py-4 bg-blue-900 text-white">
+  <nav class="flex justify-between items-center px-8 py-4 bg-blue-900 text-white">
   <h1 class="text-2xl font-bold">BudgetPro</h1>
 
   <ul class="flex gap-6 items-center">
@@ -20,96 +22,222 @@
     <li><a href="contact.html" class="hover:text-blue-300">Contact Us</a></li>
     <li><a href="login.html" class="hover:text-blue-300">Login</a></li>
     <li><a href="signup.html" class="hover:text-blue-300">Sign up</a></li>
+
+    <li>
+      <a href="dashboard.html"
+         class="bg-white text-blue-900 px-4 py-2 rounded-lg font-semibold hover:bg-blue-100">
+         Start budgeting
+      </a>
+    </li>
   </ul>
 </nav>
 
-<section class="bg-blue-50 py-10 text-center">
-  <h1 class="text-4xl font-bold text-blue-900 mb-2">Your Budget Dashboard</h1>
-  <p class="text-lg">Add income, track expenses, and see your balance in real-time.</p>
-</section>
+<div class="p-6 max-w-5xl mx-auto">
 
-<section class="px-8 md:px-20 py-10 grid md:grid-cols-2 gap-10">
+  <!-- TOTALS -->
+  <div class="grid md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white p-4 rounded shadow">
+      <h3>Total Income</h3>
+      <p id="income-total" class="text-green-600 text-xl">KES 0</p>
+    </div>
 
-  <div class="bg-white p-6 shadow-lg rounded-lg">
-    <h2 class="text-2xl font-semibold text-blue-900 mb-4">Add Income</h2>
-    <form id="income-form" class="flex flex-col gap-4">
-      <input type="number" id="income-input" placeholder="Enter amount" class="border rounded px-3 py-2">
-      <button type="submit" class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700">
-        Add Income
-      </button>
-    </form>
-    <p class="mt-4">Total Income: <span id="income-total">0</span></p>
+    <div class="bg-white p-4 rounded shadow">
+      <h3>Total Expenses</h3>
+      <p id="expense-total" class="text-red-600 text-xl">KES 0</p>
+    </div>
+
+    <div class="bg-white p-4 rounded shadow">
+      <h3>Balance</h3>
+      <p id="balance" class="text-blue-600 text-xl">KES 0</p>
+    </div>
   </div>
 
-  <div class="bg-white p-6 shadow-lg rounded-lg">
-    <h2 class="text-2xl font-semibold text-blue-900 mb-4">Add Expense</h2>
-    <form id="expense-form" class="flex flex-col gap-4">
-      <input type="text" id="expense-name" placeholder="Expense name" class="border rounded px-3 py-2">
-      <input type="number" id="expense-amount" placeholder="Amount" class="border rounded px-3 py-2">
-      <button type="submit" class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700">
-        Add Expense
-      </button>
-    </form>
-    <p class="mt-4">Total Expenses: <span id="expense-total">0</span></p>
+  <!-- ADD INCOME -->
+  <div class="bg-white p-4 rounded shadow mb-6">
+    <h2 class="font-bold mb-3">Add Income</h2>
+
+    <input id="income-amount" type="number" placeholder="Amount"
+      class="border p-2 rounded w-full mb-2">
+
+    <input id="income-category" placeholder="Category (e.g Salary)"
+      class="border p-2 rounded w-full mb-2">
+
+    <input id="income-date" type="date"
+      class="border p-2 rounded w-full mb-2">
+
+    <button id="add-income"
+      class="bg-blue-900 text-white px-4 py-2 rounded w-full">
+      Add Income
+    </button>
   </div>
 
-</section>
+  <!-- ADD EXPENSE -->
+  <div class="bg-white p-4 rounded shadow mb-6">
+    <h2 class="font-bold mb-3">Add Expense</h2>
 
-<section class="px-8 md:px-20 py-10 text-center">
-  <div class="bg-blue-900 text-white p-6 rounded-lg shadow-lg">
-    <h2 class="text-2xl font-semibold mb-4">Your Balance</h2>
-    <p class="text-3xl font-bold" id="balance">0</p>
+    <input id="expense-name" placeholder="Expense Name"
+      class="border p-2 rounded w-full mb-2">
+
+    <input id="expense-amount" type="number" placeholder="Amount"
+      class="border p-2 rounded w-full mb-2">
+
+    <input id="expense-category" placeholder="Category (e.g Food)"
+      class="border p-2 rounded w-full mb-2">
+
+    <input id="expense-date" type="date"
+      class="border p-2 rounded w-full mb-2">
+
+    <button id="add-expense"
+      class="bg-blue-900 text-white px-4 py-2 rounded w-full">
+      Add Expense
+    </button>
   </div>
-</section>
+
+  <!-- HISTORY -->
+  <div class="bg-white p-4 rounded shadow mb-6">
+    <h2 class="font-bold mb-4">Transaction History</h2>
+    <ul id="historyList" class="space-y-3"></ul>
+  </div>
+
+  <!-- PIE CHART -->
+  <div class="bg-white p-4 rounded shadow">
+    <h2 class="font-bold mb-4">Expense Breakdown</h2>
+    <canvas id="expenseChart"></canvas>
+  </div>
+
+</div>
 
 <script>
-  let incomeTotal = 0;
-  let expenseTotal = 0;
 
-  const incomeForm = document.getElementById('income-form');
-  const expenseForm = document.getElementById('expense-form');
+document.addEventListener("DOMContentLoaded", function () {
 
-  const incomeInput = document.getElementById('income-input');
-  const expenseName = document.getElementById('expense-name');
-  const expenseAmount = document.getElementById('expense-amount');
+  let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
 
-  const incomeDisplay = document.getElementById('income-total');
-  const expenseDisplay = document.getElementById('expense-total');
-  const balanceDisplay = document.getElementById('balance');
+  const incomeDisplay = document.getElementById("income-total");
+  const expenseDisplay = document.getElementById("expense-total");
+  const balanceDisplay = document.getElementById("balance");
+  const historyList = document.getElementById("historyList");
 
-  incomeForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const incomeValue = parseFloat(incomeInput.value);
-    if(!isNaN(incomeValue) && incomeValue > 0) {
-      incomeTotal += incomeValue;
-      incomeDisplay.textContent = incomeTotal.toFixed(2);
-      updateBalance();
-      incomeInput.value = '';
-    }
-  });
+  const chartCtx = document.getElementById("expenseChart").getContext("2d");
+  let chart;
 
-  expenseForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const expenseValue = parseFloat(expenseAmount.value);
-    const name = expenseName.value.trim();
-    if(name && !isNaN(expenseValue) && expenseValue > 0) {
-      expenseTotal += expenseValue;
-      expenseDisplay.textContent = expenseTotal.toFixed(2);
-      updateBalance();
-      expenseAmount.value = '';
-      expenseName.value = '';
-    }
-  });
+  function updateUI() {
 
-  function updateBalance() {
+    let incomeTotal = 0;
+    let expenseTotal = 0;
+    let categoryTotals = {};
+
+    historyList.innerHTML = "";
+
+    transactions.forEach((t, index) => {
+
+      if (t.type === "income") {
+        incomeTotal += t.amount;
+      } else {
+        expenseTotal += t.amount;
+
+        // CATEGORY TOTALS FOR CHART
+        if (!categoryTotals[t.category]) {
+          categoryTotals[t.category] = 0;
+        }
+        categoryTotals[t.category] += t.amount;
+      }
+
+      const li = document.createElement("li");
+      li.className = "p-3 bg-gray-100 rounded flex justify-between";
+
+      li.innerHTML = `
+        <div>
+          <p>${t.type === "income" ? "💰" : "💸"} 
+          ${t.name || ""} KES ${t.amount}</p>
+          <p class="text-sm text-gray-500">
+            ${t.category} | ${t.date}
+          </p>
+        </div>
+        <button onclick="deleteTransaction(${index})"
+          class="text-red-500">Delete</button>
+      `;
+
+      historyList.appendChild(li);
+    });
+
     const balance = incomeTotal - expenseTotal;
-    balanceDisplay.textContent = balance.toFixed(2);
-  }
-</script>
 
-<footer class="bg-blue-950 text-white text-center py-6">
-  <p>© 2026 BudgetPro. All rights reserved.</p>
-</footer>
+    incomeDisplay.textContent = "KES " + incomeTotal.toFixed(2);
+    expenseDisplay.textContent = "KES " + expenseTotal.toFixed(2);
+    balanceDisplay.textContent = "KES " + balance.toFixed(2);
+
+    localStorage.setItem("transactions", JSON.stringify(transactions));
+
+    updateChart(categoryTotals);
+  }
+
+  function updateChart(data) {
+
+    const labels = Object.keys(data);
+    const values = Object.values(data);
+
+    if (chart) chart.destroy();
+
+    chart = new Chart(chartCtx, {
+      type: "pie",
+      data: {
+        labels: labels,
+        datasets: [{
+          data: values
+        }]
+      }
+    });
+  }
+
+  document.getElementById("add-income").addEventListener("click", function () {
+
+    const amount = parseFloat(document.getElementById("income-amount").value);
+    const category = document.getElementById("income-category").value || "General";
+    const date = document.getElementById("income-date").value || "No date";
+
+    if (!amount) return;
+
+    transactions.push({
+      type: "income",
+      amount,
+      category,
+      date
+    });
+
+    updateUI();
+  });
+
+  document.getElementById("add-expense").addEventListener("click", function () {
+
+    const name = document.getElementById("expense-name").value;
+    const amount = parseFloat(document.getElementById("expense-amount").value);
+    const category = document.getElementById("expense-category").value || "General";
+    const date = document.getElementById("expense-date").value || "No date";
+
+    if (!amount || !name) return;
+
+    transactions.push({
+      type: "expense",
+      name,
+      amount,
+      category,
+      date
+    });
+
+    updateUI();
+  });
+
+  window.deleteTransaction = function (index) {
+    transactions.splice(index, 1);
+    updateUI();
+  };
+
+  updateUI();
+
+});
+
+</script>
 
 </body>
 </html>
