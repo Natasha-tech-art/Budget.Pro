@@ -24,6 +24,13 @@
    ### Plans
    ![Plans](images/Screenshot%202026-03-25%20102239.png)
 
+   ## Setup
+   - Follow these steps to run the project locally:
+   1. Clone the repository
+     git clone
+     https://natasha-tech-art.github.io/Budget.Pro/
+   2. Open the project folder 
+   3. Open index.html in your browser
 
    ### Technologies Used
        - HTML5 
