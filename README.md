@@ -14,6 +14,17 @@
    7. Login Page - Contains validation and show/hide password
    8. Contact Page - Form validation
 
+   ## Screenshots
+   ### Home Page
+   ![Home](images/Screenshot%202026-03-25%20102150.png)
+
+   ### Dashboard
+   ![Dashboard](images/Screenshot%202026-03-25%20102216.png)
+
+   ### Plans
+   ![Plans](images/Screenshot%202026-03-25%20102239.png)
+
+
    ### Technologies Used
        - HTML5 
        - Tailwind CSS
